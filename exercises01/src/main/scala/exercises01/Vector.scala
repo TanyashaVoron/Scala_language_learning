@@ -21,7 +21,6 @@ class Vector(val x: Double, val y: Double) {
 }
 
 object Vector {
-
   def fromAngle(angle: Double, length: Double): Vector = new Vector(length*Math.cos(angle), length*Math.sin(angle))
 
   def sum(list: List[Vector]): Vector = list.foldRight(new Vector(0,0))((a,b)=>a+b)
