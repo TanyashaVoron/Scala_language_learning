@@ -20,7 +20,7 @@ class Vector(val x: Double, val y: Double) {
 
   override def equals(other: Any): Boolean = other match {
     case Vector(x, y) => (this.x == x & this.y == y)
-    case _ => false
+    case _            => false
   }
 
   // Vector(x, y)
