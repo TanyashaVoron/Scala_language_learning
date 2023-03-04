@@ -1,11 +1,13 @@
 package exercises02
 
-object Counter {
-  private val regexCountWords        = "[\\s.,!?:\\n\\t\\r()]"
-  private val regexCountEnglishWords = "[А-Яа-я\\s.,!?:\\n\\t\\r()]"
-  private val regexCountNumbers      = "[А-Яа-яA-Za-z\\s!?:\\-\\n\\t\\r()]"
+import scala.util.matching.Regex
 
-  private def veryNiceFunctionNmae(text: String, regex: String): Map[String, Int] =
+object Counter {
+  private val regexCountWords        = "[\\s.,!?:\\n\\t\\r()]".r
+  private val regexCountEnglishWords = "[А-Яа-я\\s.,!?:\\n\\t\\r()]".r
+  private val regexCountNumbers      = "[А-Яа-яA-Za-z\\s!?:\\-\\n\\t\\r()]".r
+
+  def veryNiceFunctionNmae(text: String, regex: Regex): Map[String, Int] =
     regex
       .split(text)
       .filter(_.nonEmpty)
