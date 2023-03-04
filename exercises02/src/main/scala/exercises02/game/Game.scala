@@ -22,15 +22,20 @@ class Game(controller: GameController) {
     val command = controller.nextLine()
 
     command match {
-      case "I give up"               => controller.giveUp(number)
-      case x if x == number.toString => controller.guessed()
+      case GameController.IGiveUp => controller.giveUp(number)
       case _ =>
-        val commandInt = command.toIntOption.getOrElse(-1)
-        if (commandInt != -1) {
-          if (commandInt < number) controller.numberIsBigger()
-          if (commandInt > number) controller.numberIsSmaller()
-        } else controller.wrongInput()
-        play(number)
+        command.toIntOption match {
+          case Some(value) if value < number =>
+            controller.numberIsBigger()
+            play(number)
+          case Some(value) if value > number =>
+            controller.numberIsSmaller()
+            play(number)
+          case Some(_) => controller.guessed()
+          case None =>
+            controller.wrongInput()
+            play(number)
+        }
     }
   }
 }

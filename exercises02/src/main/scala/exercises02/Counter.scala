@@ -5,9 +5,9 @@ object Counter {
   private val regexCountEnglishWords = "[А-Яа-я\\s.,!?:\\n\\t\\r()]"
   private val regexCountNumbers      = "[А-Яа-яA-Za-z\\s!?:\\-\\n\\t\\r()]"
 
-  def *(text: String, regex: String): Map[String, Int] =
-    text
-      .split(regex)
+  def veryNiceFunctionNmae(text: String, regex: String): Map[String, Int] =
+    regex
+      .split(text)
       .filter(_.nonEmpty)
       .groupMapReduce(_.toLowerCase())(_ => 1)(_ + _)
 
@@ -15,17 +15,17 @@ object Counter {
     * Посчитать количество вхождений слов в тексте
     * слово отделено символами [\s.,!?:\n\t\r]
     */
-  def countWords(text: String): Map[String, Int] = *(text, regexCountWords)
+  def countWords(text: String): Map[String, Int] = veryNiceFunctionNmae(text, regexCountWords)
 
   /**
     * Посчитать количество вхождений английских слов в тексте
     * слово отделено символами [\s.,!?:\n\t\r]
     */
-  def countEnglishWords(text: String): Map[String, Int] = *(text, regexCountEnglishWords)
+  def countEnglishWords(text: String): Map[String, Int] = veryNiceFunctionNmae(text, regexCountEnglishWords)
 
   /**
     * Посчитать количество вхождений чисел в тексте
     * число отделено символами [\s!?:\n\t\r]
     */
-  def countNumbers(text: String): Map[String, Int] = *(text, regexCountNumbers).filter(_._1 != ",")
+  def countNumbers(text: String): Map[String, Int] = veryNiceFunctionNmae(text, regexCountNumbers).filter(_._1 != ",")
 }
