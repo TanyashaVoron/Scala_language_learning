@@ -5,7 +5,7 @@ object Counter {
   private val regexCountEnglishWords = "[А-Яа-я\\s.,!?:\\n\\t\\r()]"
   private val regexCountNumbers      = "[А-Яа-яA-Za-z\\s!?:\\-\\n\\t\\r()]"
 
-  def veryNiceFunctionNmae(text: String, regex: String): Map[String, Int] =
+  private def veryNiceFunctionNmae(text: String, regex: String): Map[String, Int] =
     regex
       .split(text)
       .filter(_.nonEmpty)
