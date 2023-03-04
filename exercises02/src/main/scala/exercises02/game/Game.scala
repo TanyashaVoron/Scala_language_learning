@@ -16,7 +16,6 @@ class Game(controller: GameController) {
     * Если игрок ввел неизвестную комбинацию символов, надо вызвать contoller.wrongInput и продолжить игру
     *
     */
-  private def checkString(str: String): Boolean = str.matches("[-+]?\\d+")
   @tailrec
   final def play(number: Int): Unit = {
     controller.askNumber()
@@ -26,9 +25,10 @@ class Game(controller: GameController) {
       case "I give up"               => controller.giveUp(number)
       case x if x == number.toString => controller.guessed()
       case _ =>
-        if (checkString(command)) {
-          if (command.toInt < number) controller.numberIsBigger()
-          if (command.toInt > number) controller.numberIsSmaller()
+        val commandInt = command.toIntOption.getOrElse(-1)
+        if (commandInt != -1) {
+          if (commandInt < number) controller.numberIsBigger()
+          if (commandInt > number) controller.numberIsSmaller()
         } else controller.wrongInput()
         play(number)
     }
