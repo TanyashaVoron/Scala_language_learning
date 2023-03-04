@@ -1,4 +1,5 @@
 package exercises02.game
+import scala.annotation.tailrec
 
 class Game(controller: GameController) {
 
@@ -14,7 +15,22 @@ class Game(controller: GameController) {
     * Если игрок написал GameController.IGiveUp, игра должна закончиться и вызвать controller.giveUp(number)
     * Если игрок ввел неизвестную комбинацию символов, надо вызвать contoller.wrongInput и продолжить игру
     *
-    * @param number загаданное число
     */
-  def play(number: Int): Unit = ???
+  private def checkString(str: String): Boolean = str.matches("[-+]?\\d+")
+  @tailrec
+  final def play(number: Int): Unit = {
+    controller.askNumber()
+    val command = controller.nextLine()
+
+    command match {
+      case "I give up"               => controller.giveUp(number)
+      case x if x == number.toString => controller.guessed()
+      case _ =>
+        if (checkString(command)) {
+          if (command.toInt < number) controller.numberIsBigger()
+          if (command.toInt > number) controller.numberIsSmaller()
+        } else controller.wrongInput()
+        play(number)
+    }
+  }
 }

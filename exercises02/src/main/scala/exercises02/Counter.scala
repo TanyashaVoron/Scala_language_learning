@@ -11,9 +11,7 @@ object Counter {
       .split("[\\s.,!?:\\n\\t\\r()]")
       .filter(_ != "")
       .map(a => a.toLowerCase)
-      .foldLeft(Map.empty[String, Int].withDefaultValue(0)) {
-        case (count, a) => count.updated(a, count(a) + 1)
-      }
+      .foldLeft(Map.empty[String, Int].withDefaultValue(0)) { case (count, a) => count.updated(a, count(a) + 1) }
 
   /**
     * Посчитать количество вхождений английских слов в тексте
@@ -24,9 +22,7 @@ object Counter {
       .split("[А-Яа-я\\s.,!?:\\n\\t\\r()]")
       .filter(_ != "")
       .map(a => a.toLowerCase)
-      .foldLeft(Map.empty[String, Int].withDefaultValue(0)) {
-        case (count, a) => count.updated(a, count(a) + 1)
-      }
+      .foldLeft(Map.empty[String, Int].withDefaultValue(0)) { case (count, a) => count.updated(a, count(a) + 1) }
 
   /**
     * Посчитать количество вхождений чисел в тексте
@@ -37,7 +33,5 @@ object Counter {
       .split("[А-Яа-яA-Za-z\\s!?:\\-\\n\\t\\r()]")
       .filter(_ != "")
       .filter(_ != ",")
-      .foldLeft(Map.empty[String, Int].withDefaultValue(0)) {
-        case (count, a) => count.updated(a, count(a) + 1)
-      }
+      .foldLeft(Map.empty[String, Int].withDefaultValue(0)) { case (count, a) => count.updated(a, count(a) + 1) }
 }
