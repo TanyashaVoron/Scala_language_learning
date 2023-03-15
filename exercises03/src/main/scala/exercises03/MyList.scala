@@ -16,11 +16,12 @@ object MyList {
     }
   }
 
-  @tailrec
-  def reverse[A](list: MyList[A], convertList: MyList[A] = Nil): Any = {
-    list match {
-      case Cons(head, tail) => reverse(tail, Cons(head, convertList))
+  def reverse[A](list: MyList[A]): MyList[A] = {
+    @tailrec
+    def fold(curr: MyList[A], convertList: MyList[A]): MyList[A] = curr match {
       case Nil              => convertList
+      case Cons(head, tail) => fold(tail, Cons(head, convertList))
     }
+    fold(list, Nil)
   }
 }
