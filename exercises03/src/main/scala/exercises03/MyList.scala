@@ -9,15 +9,15 @@ case object Nil extends MyList[Nothing]
 object MyList {
   def sum(list: MyList[Int], sumElementsList: Int = 0): Int = {
     list match {
-      case Nil => sumElementsList
-      case Cons(head,tail) => sum(Cons(head, tail), sumElementsList)
+      case Cons(head, tail) => head + sum(tail, sumElementsList)
+      case Nil              => 0
     }
   }
 
-  def reverse[A](list: MyList[A], convertList: MyList[A] = new MyList[A] {}): MyList[A] = {
+  def reverse[A](list: MyList[A], convertList: MyList[A] = Nil): Any = {
     list match {
-      case Cons(head, tail) => reverse(Cons(head, convertList), tail)
-      case Nil => convertList
+      case Cons(head, tail) => reverse(tail, Cons(head, convertList))
+      case Nil              => convertList
     }
   }
 }
