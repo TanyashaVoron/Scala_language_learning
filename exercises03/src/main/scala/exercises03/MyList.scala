@@ -9,19 +9,21 @@ final case class Cons[A](head: A, tail: MyList[A]) extends MyList[A]
 case object Nil extends MyList[Nothing]
 
 object MyList {
-  def sum(list: MyList[Int], sumElementsList: Int = 0): Int = {
-    list match {
-      case Cons(head, tail) => head + sum(tail, sumElementsList)
-      case Nil              => 0
-    }
+  def sum(list: MyList[Int]): Int = {
+    def sumList(list: MyList[Int], sumElementsList: Int): Int =
+      list match {
+        case Cons(head, tail) => head + sumList(tail, sumElementsList)
+        case Nil              => 0
+      }
+    sumList(list, 0)
   }
 
   def reverse[A](list: MyList[A]): MyList[A] = {
     @tailrec
-    def fold(curr: MyList[A], convertList: MyList[A]): MyList[A] = curr match {
+    def rebuild(curr: MyList[A], convertList: MyList[A]): MyList[A] = curr match {
       case Nil              => convertList
-      case Cons(head, tail) => fold(tail, Cons(head, convertList))
+      case Cons(head, tail) => rebuild(tail, Cons(head, convertList))
     }
-    fold(list, Nil)
+    rebuild(list, Nil)
   }
 }
