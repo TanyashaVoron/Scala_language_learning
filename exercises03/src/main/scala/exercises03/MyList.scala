@@ -1,5 +1,7 @@
 package exercises03
 
+import scala.annotation.tailrec
+
 sealed trait MyList[+A]
 
 final case class Cons[A](head: A, tail: MyList[A]) extends MyList[A]
@@ -14,6 +16,7 @@ object MyList {
     }
   }
 
+  @tailrec
   def reverse[A](list: MyList[A], convertList: MyList[A] = Nil): Any = {
     list match {
       case Cons(head, tail) => reverse(tail, Cons(head, convertList))
