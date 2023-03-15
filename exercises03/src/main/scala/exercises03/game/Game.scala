@@ -13,7 +13,6 @@ object Game {
         }
     }
 
-
   def action(state: State, number: Int): GameController => Unit =
     state match {
       case GiveUp          => _.giveUp(number)
