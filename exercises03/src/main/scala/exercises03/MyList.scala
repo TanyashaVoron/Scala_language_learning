@@ -10,10 +10,11 @@ case object Nil extends MyList[Nothing]
 
 object MyList {
   def sum(list: MyList[Int]): Int = {
+    @tailrec
     def sumList(list: MyList[Int], sumElementsList: Int): Int =
       list match {
-        case Cons(head, tail) => head + sumList(tail, sumElementsList)
-        case Nil              => 0
+        case Cons(head, tail) => sumList(tail, sumElementsList + head)
+        case Nil              => sumElementsList
       }
     sumList(list, 0)
   }
