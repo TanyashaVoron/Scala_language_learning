@@ -28,7 +28,7 @@ object Machine {
         if (machine.candies > 0) inputs match {
           case Coin :: _ if machine.locked  => run(Machine(locked = false, machine.candies, machine.coins + 1), tail)
           case Turn :: _ if !machine.locked => run(Machine(locked = true, machine.candies - 1, machine.coins), tail)
-          case _                       => run(machine, tail)
+          case _                            => run(machine, tail)
         }
         else (machine, inputs)
     }
