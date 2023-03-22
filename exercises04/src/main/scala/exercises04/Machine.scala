@@ -2,8 +2,6 @@ package exercises04
 
 import exercises04.Machine.Input.{Coin, Turn}
 
-import scala.annotation.tailrec
-
 case class Machine(locked: Boolean, candies: Int, coins: Int)
 
 /**
@@ -22,22 +20,17 @@ object Machine {
     case object Turn extends Input
   }
 
-  //@scala.annotation.tailrec
+  @scala.annotation.tailrec
   def run(machine: Machine, inputs: List[Input]): (Machine, List[Input]) = {
-    @tailrec
-    def runMachine(machine: Machine, inputs: List[Input]): (Machine, List[Input]) = {
-      if (machine.candies > 0)
-        inputs.head match {
-          case Coin if !machine.locked =>
-            runMachine(Machine(locked = true, machine.candies, machine.coins), inputs.tail)
-          case Turn if machine.locked =>
-            runMachine(Machine(locked = false, machine.candies - 1, machine.coins), inputs.tail)
-          case _ => runMachine(machine, inputs.tail)
+    inputs match {
+      case Nil => (machine, Nil)
+      case _ =>
+        if (machine.candies > 0) inputs.head match {
+          case Coin if machine.locked  => run(Machine(locked = false, machine.candies, machine.coins + 1), inputs.tail)
+          case Turn if !machine.locked => run(Machine(locked = true, machine.candies - 1, machine.coins), inputs.tail)
+          case _                       => run(machine, inputs.tail)
         }
-      else (machine, inputs.tail)
-
+        else (machine, inputs)
     }
-
-    runMachine(machine, inputs)
   }
 }
