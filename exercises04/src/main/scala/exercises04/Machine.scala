@@ -24,11 +24,11 @@ object Machine {
   def run(machine: Machine, inputs: List[Input]): (Machine, List[Input]) = {
     inputs match {
       case Nil => (machine, Nil)
-      case _ =>
-        if (machine.candies > 0) inputs.head match {
-          case Coin if machine.locked  => run(Machine(locked = false, machine.candies, machine.coins + 1), inputs.tail)
-          case Turn if !machine.locked => run(Machine(locked = true, machine.candies - 1, machine.coins), inputs.tail)
-          case _                       => run(machine, inputs.tail)
+      case _ :: tail =>
+        if (machine.candies > 0) inputs match {
+          case Coin :: _ if machine.locked  => run(Machine(locked = false, machine.candies, machine.coins + 1), tail)
+          case Turn :: _ if !machine.locked => run(Machine(locked = true, machine.candies - 1, machine.coins), tail)
+          case _                       => run(machine, tail)
         }
         else (machine, inputs)
     }
