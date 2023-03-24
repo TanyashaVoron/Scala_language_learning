@@ -10,25 +10,9 @@ object Tree {
     case Branch(left, right) => g(fold(left)(f)(g), fold(right)(f)(g))
     case Leaf(v)             => f(v)
   }
-
-  def size[A](t: Tree[A]): Int = t match {
-    case Branch(left, right) => size(left) + size(right) + 1
-    case Leaf(_)             => 1
-  }
-
-  def max(t: Tree[Int]): Int = t match {
-    case Branch(left, right) => max(left) max max(right)
-    case Leaf(v)             => v
-  }
-
-  def depth[A](t: Tree[A]): Int = t match {
-    case Branch(left, right) => (depth(left) max depth(right)) + 1
-    case Leaf(_)             => 1
-  }
-
+  def size[A](t: Tree[A]): Int  = fold(t)(_ => 1)(1 + _ + _)
+  def max(t: Tree[Int]): Int    = fold(t)((v: Int) => v)(_ max _)
+  def depth[A](t: Tree[A]): Int = fold(t)(_ => 1)((l: Int, r: Int) => 1 + (l max r))
   // тут может пригодиться явное указание типа
-  def map[A, B](t: Tree[A])(f: A => B): Tree[B] = t match {
-    case Branch(left, right) => Branch(map(left)(f), map(right)(f))
-    case Leaf(v)             => Leaf(f(v))
-  }
+  def map[A, B](t: Tree[A])(f: A => B): Tree[B] = fold(t)((v: A) => Leaf(f(v)): Tree[B])(Branch(_, _))
 }
