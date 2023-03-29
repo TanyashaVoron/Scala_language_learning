@@ -15,5 +15,9 @@ object Combinators {
   //
   // Напишите функцию, используя комбинаторы стандартной библиотеки,
   // которая проведёт полную реакцию
-  def react(ipt: String): String = ???
+  def react(ipt: String): String = {
+    ipt.foldLeft("")((shar, s) =>
+      if (shar.nonEmpty && shar.last != s && shar.last.toLower == s.toLower) shar.init else shar + s
+    )
+  }
 }
