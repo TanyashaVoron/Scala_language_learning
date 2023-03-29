@@ -16,8 +16,12 @@ object Combinators {
   // Напишите функцию, используя комбинаторы стандартной библиотеки,
   // которая проведёт полную реакцию
   def react(ipt: String): String = {
-    ipt.foldLeft("")((shar, s) =>
-      if (shar.nonEmpty && shar.last != s && shar.last.toLower == s.toLower) shar.init else shar + s
-    )
+    val ans = ipt.foldLeft(List[Char]()) { (char, s) =>
+      char match {
+        case head :: tail if head != s && head.toLower == s.toLower => tail
+        case _                                                      => s :: char
+      }
+    }
+    ans.reverse.mkString("")
   }
 }
