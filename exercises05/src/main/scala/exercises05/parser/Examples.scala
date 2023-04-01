@@ -28,11 +28,11 @@ object Examples {
     for {
       firstName  <- rawUser.firstName
       secondName <- rawUser.secondName
-      passport_ = rawUser.passport.flatMap(parsePassport)
-      if rawUser.passport.isEmpty || passport_.isDefined
+      passport = rawUser.passport.flatMap(parsePassport)
+      if rawUser.passport.isEmpty || passport.isDefined
       if !rawUser.banned
       id <- rawUser.id.toLongOption
-    } yield User(id, UserName(firstName, secondName, rawUser.thirdName), passport_)
+    } yield User(id, UserName(firstName, secondName, rawUser.thirdName), passport)
 
   /**
     * если rawUser.firstName или rawUser.secondName == None, то функция должна вернуть Left(InvalidName)
