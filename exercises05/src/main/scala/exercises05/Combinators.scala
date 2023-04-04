@@ -17,11 +17,11 @@ object Combinators {
   // которая проведёт полную реакцию
   def react(ipt: String): String = {
     ipt.foldLeft("") {
-      case (str, next) =>
-        str.takeRight(1) match {
-          case e if (next.isLower && next.toUpper.toString == e) || (next.isUpper && next.toLower.toString == e) =>
-            str.dropRight(1)
-          case _ => str + next
+      case (acc, el) =>
+        acc.lastOption match {
+          case Some(last) if (last.isLower && last.toUpper == el) || (last.isUpper && last.toLower == el) =>
+            acc.dropRight(1)
+          case _ => acc + el
         }
     }
   }
