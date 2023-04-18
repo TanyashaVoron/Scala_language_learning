@@ -21,13 +21,13 @@ object Exercise01 {
       def pure[F[_]: Applicative]: F[A] = Applicative[F].pure(a)
     }
 
-    implicit class FoldOps[F[_], A](private val fa: F[A]) extends AnyVal{
+    implicit class FoldOps[F[_], A](private val fa: F[A]) extends AnyVal {
       def foldLeft[B](b: B)(f: (B, A) => B)(implicit fold: Foldable[F]): B = {
         fold.foldLeft(fa, b)(f)
       }
     }
 
-    implicit class CombineAllOps[F[_], A: Monoid](private val fa: F[A]){
+    implicit class CombineAllOps[F[_], A: Monoid](private val fa: F[A]) {
       def combineAll(implicit fold: Foldable[F]): A = {
         fold.foldLeft(fa, Monoid[A].empty)(Monoid[A].combine)
       }
